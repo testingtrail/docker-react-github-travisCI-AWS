@@ -84,3 +84,9 @@ CONTINUOUS INTEGRATION WITH GITHUB
     - git remote add origin https://github.com/jorgeautomation/docker-react.git
     - git push origin master
 
+CONTINUOUS DELIVERY WITH TRAVIS CI
+----------------------------------
+
+- Go to https://travis-ci.org/ and sign in with Github
+
+- Go to your profile, switch on your 'docker-react', then go to the dashboard
