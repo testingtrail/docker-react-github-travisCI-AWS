@@ -90,3 +90,12 @@ CONTINUOUS DELIVERY WITH TRAVIS CI
 - Go to https://travis-ci.org/ and sign in with Github
 
 - Go to your profile, switch on your 'docker-react', then go to the dashboard
+
+- We have to create a .travis.yml file to tell Travis what we want to do with our repository
+    - Create the file in root folder
+    - sudo: required to run it as administrator
+    - create a docker service to have a version of Docker ready to use
+    - put the Dockerfile.dev to be installed, we have to put it a tag because since this is running automatically we cannot take the image created for our containers.
+    - add the script to run, remember first our test. We have to add '-- --coverage' because if not travis will not never return the control to the command (because it will wait more instructions for testing)
+
+- We will commit the changes to Gitgub, as soon as we do that, since we now have a .travis.yml will build the image and test it and report to us.
