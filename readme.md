@@ -136,3 +136,10 @@ LINKING TRAVIS TO AWS
     - Go to travis tor your project -> more options -> settings -> environment variables
     - AWS_ACCESS_KEY : "value from aws"
     - AWS_SECRET_KEY : "value from aws"
+
+MAPPING THE PORT IN AWS
+-----------------------
+
+- Now if you go to the S3 bucket you will see the folder of the project and in the Beanstalk you will see it is deploying but not working. The reason is that we haven't specified the external port in the dockerfile for production
+
+- We have to add 'EXPOSE 80' in our dockerfile
