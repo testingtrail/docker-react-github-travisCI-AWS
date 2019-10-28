@@ -99,3 +99,40 @@ CONTINUOUS DELIVERY WITH TRAVIS CI
     - add the script to run, remember first our test. We have to add '-- --coverage' because if not travis will not never return the control to the command (because it will wait more instructions for testing)
 
 - We will commit the changes to Gitgub, as soon as we do that, since we now have a .travis.yml will build the image and test it and report to us.
+
+AWS ELASTIC BEANSTALK
+---------------------
+
+- Now we will be host our application to any cloud service, in this case AWS
+
+- Go to https://aws.amazon.com/ and login to your account and look for Elastic Beanstalk, which is the easiest way to run a single container
+
+- Go to create new application -> add a name -> create environment -> choose web server environment -> on base configuration, platform choose Docker -> create environment
+
+- The benefits of amazon Beanstalk is that automatically scale if the traffic is too much, using the load balancer that is created automatically. 
+
+- Once done you can put the URL in any browser and see your app
+
+- NOTE: REMEMBER TO DELETE your beanstalk once you do this exercise to avoid paying real money for it, go to Actions -> delete application (all in 'All applications' dashboard)
+
+LINKING TRAVIS TO AWS
+---------------------
+
+- Now we change the .travis.yml to take into conderation the deploy section
+    - provider will be elasticbeanstalk
+    - the regions depends on the one of your amazon beanstalk
+    - app would be the name you put it
+    - env would be the name of your env
+    - the bucket_name, you have to go so S3 to see the name of the bucket that was created with your elastic beanstalk
+    - bucket_path will be your app name
+
+- Then set the keys for security
+    - Go to AWS -> in services look for AIM -> go to Users -> add user -> choose a name (and add programmatic access only)
+    - Attach existing policies or permissions -> look for beanstalk and select the one with full access
+
+- Remember that secret key will be shown just ONCE, if you want to see it again you will have to regenerat it.
+
+- We are not going to put the keys in our travis file directly as the github repo is PUBLIC, instead 
+    - Go to travis tor your project -> more options -> settings -> environment variables
+    - AWS_ACCESS_KEY : "value from aws"
+    - AWS_SECRET_KEY : "value from aws"
