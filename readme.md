@@ -142,4 +142,17 @@ MAPPING THE PORT IN AWS
 
 - Now if you go to the S3 bucket you will see the folder of the project and in the Beanstalk you will see it is deploying but not working. The reason is that we haven't specified the external port in the dockerfile for production
 
-- We have to add 'EXPOSE 80' in our dockerfile
+- We have to add 'EXPOSE 80' in our dockerfile, so AWS will look for
+
+
+CREATE FINAL FLOW WITH PULL REQUESTS
+------------------------------------
+
+- Create a new branch with 'git checkout -b feature' to create and locate in that 'feature' branch
+
+- Do some change in any file -> 'git add ' -> 'git commit -m "changed app text"' -> 'git push origin feature'
+
+
+
+
+- NOTE: REMEMBER TO DELETE your beanstalk once you do this exercise to avoid paying real money for it, go to Actions -> delete application (all in 'All applications' dashboard)
