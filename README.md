@@ -49,17 +49,30 @@ NOTE: if using the repository in github, just download and run 'npm install'
 
 3. Now you can go to the app.js in the local folder, make a change and it will be reflected in the page without having to re buid the image.
 
-- We have an issue now, the thing is that the command to run the container now is pretty big. So we can use a docker compose file to include the volumes and the ports to make the command shorter, so it will be
+
+4 CREATE DOCKER COMPOSE
+-------------------------
+
+
+1. We have an issue now, the thing is that the command to run the container now is pretty big. So we can use a docker compose file to include the volumes and the ports to make the command shorter, so it will be
+    - we have to use 'dockerfile' inside we as the file has a differente extension (that is: dev)
     - docker-compose up
 
-- Now since we are using volumes to map, is it not necessary to have in our docker file 'COPY . .'
+2. Now since we are using volumes to map, is it not necessary to have in our docker file 'COPY . .'
     - Well you may want to leave that as in the future you may want to not use docker compose or volumes at all
 
-4 CREATE DOCKER CONTAINER FOR TEST APP IN DEV
+
+5 CREATE DOCKER CONTAINER FOR TEST APP IN DEV
 -------------------------------------------
 
-- So in order to run the test you need to create another service in the docker-compose file to also read from the local directory using volumes so each time you change the test (available in src/App.test.js) you can see the test being updated in the console, also we added another command to overwrite the one in Dockerfile.dev
+1.  So in order to run the test you need to create another service in the docker-compose file to also read from the local directory using volumes so each time you change the test (available in src/App.test.js) you can see the test being updated in the console, also we added another command to overwrite the one in Dockerfile.dev
+
+2. You have to add 'command: ["npm","run","test"]' for that container to overwrite the command which is in dockerfile.dev, also notice how for this test service there is no port, it is not needed as it does not test on web.
+
+3. Run it with: docker-compose up --build
+    - Now each time you add a new test in app.test.js it will automatically run
     - Note: there is an issue on Windows that the test is not being refreshed in console
+
 
 CREATE DOCKER CONTAINER FOR APP IN PROD
 ---------------------------------------
