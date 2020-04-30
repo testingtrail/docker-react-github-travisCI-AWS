@@ -128,65 +128,72 @@ NOTE: if using the repository in github, just download and run 'npm install'
 
 5. We will commit the changes to Gitgub, as soon as we do that, since we now have a .travis.yml will build the image and test it and report to us.
 
-AWS ELASTIC BEANSTALK
+![Image description](https://github.com/jorgeautomation/docker-react/blob/master/image-travis.png)
+
+9 AWS ELASTIC BEANSTALK
 ---------------------
 
-- Now we will be host our application to any cloud service, in this case AWS
+1. Now we will be host our application to any cloud service, in this case AWS
 
-- Go to https://aws.amazon.com/ and login to your account and look for Elastic Beanstalk, which is the easiest way to run a single container
+2. Go to https://aws.amazon.com/ and login to your account and look for Elastic Beanstalk, which is the easiest way to run a single container
 
-- Go to create new application -> add a name -> create environment -> choose web server environment -> on base configuration, platform choose Docker -> create environment
+3. Go to create new application -> add a name -> create environment -> choose web server environment -> on base configuration, platform choose Docker -> create environment
+    - The benefits of amazon Beanstalk is that automatically scale if the traffic is too much, using the load balancer that is created automatically. 
 
-- The benefits of amazon Beanstalk is that automatically scale if the traffic is too much, using the load balancer that is created automatically. 
+4. Once done you can put the URL in any browser and see your app, like a welcome message page.
 
-- Once done you can put the URL in any browser and see your app
+5. **NOTE: REMEMBER TO DELETE your beanstalk** once you do this exercise to avoid paying real money for it, go to Actions -> delete application (all in 'All applications' dashboard)
 
-- NOTE: REMEMBER TO DELETE your beanstalk once you do this exercise to avoid paying real money for it, go to Actions -> delete application (all in 'All applications' dashboard)
-
-LINKING TRAVIS TO AWS
+10 LINKING TRAVIS TO AWS
 ---------------------
 
-- Now we change the .travis.yml to take into conderation the deploy section
+1. Now we change the .travis.yml to take into conderation the deploy section
     - provider will be elasticbeanstalk
     - the regions depends on the one of your amazon beanstalk
     - app would be the name you put it
-    - env would be the name of your env
-    - the bucket_name, you have to go so S3 to see the name of the bucket that was created with your elastic beanstalk
+    - env would be the name of your env in AWS
+    - the bucket_name, you have to go to S3 to see the name of the bucket that was created with your elastic beanstalk
     - bucket_path will be your app name
 
-- Then set the keys for security
+2. Then set the keys for security
     - Go to AWS -> in services look for AIM -> go to Users -> add user -> choose a name (and add programmatic access only)
     - Attach existing policies or permissions -> look for beanstalk and select the one with full access
 
-- Remember that secret key will be shown just ONCE, if you want to see it again you will have to regenerat it.
+3. Remember that secret key will be shown just ONCE, if you want to see it again you will have to regenerat it.
 
-- We are not going to put the keys in our travis file directly as the github repo is PUBLIC, instead 
-    - Go to travis tor your project -> more options -> settings -> environment variables
+4. We are not going to put the keys in our travis file directly as the github repo is PUBLIC, instead 
+    - Go to travis to your project -> more options -> settings -> environment variables
     - AWS_ACCESS_KEY : "value from aws"
     - AWS_SECRET_KEY : "value from aws"
 
-MAPPING THE PORT IN AWS
+5. put those variables in your .travis.yml
+
+11 MAPPING THE PORT IN AWS
 -----------------------
 
-- Now if you go to the S3 bucket you will see the folder of the project and in the Beanstalk you will see it is deploying but not working. The reason is that we haven't specified the external port in the dockerfile for production
+1. Now if you go to the S3 bucket you will see the folder of the project and in the Beanstalk you will see it is deploying but not working. The reason is that we haven't specified the external port in the dockerfile for production
 
-- We have to add 'EXPOSE 80' in our dockerfile, so AWS will look for
+2. We have to add 'EXPOSE 80' in our dockerfile, so AWS will look for it. elastic beanstalk will look automatically for a dockerfile and in there we have our build.
 
 
 
-CREATE FINAL FLOW WITH PULL REQUESTS
+12 CREATE FINAL FLOW WITH PULL REQUESTS
 ------------------------------------
 
-- Create a new branch with 'git checkout -b feature' to create and locate in that 'feature' branch
+1. Create a new branch with 'git checkout -b feature' to create and locate in that 'feature' branch
 
-- Do some change in any file -> 'git add ' -> 'git commit -m "changed app text"' -> 'git push origin feature'
+2. Do some change in any file -> 'git add ' -> 'git commit -m "changed app text"' -> 'git push origin feature'
 
-- Go to Github, yo the new branch and click on 'Commit and pull request'
-    - You will notice two notifications from Travis about code being executed.
-    - Now that the build is succedded Click on 'Merge pull request' and the build in Travis
-    will happen BUT this time it will deploy to AWS as master is the branch we had to run in AWS
+3. Go to Github, to the new branch and click on 'Commit and pull request'
+    
+4.  You will notice two notifications from Travis about code being executed. This are checks
+    - The first one is that we pushed changes to Github.
+    - Second one is kind of fake the merge into master and then running the test.
 
-- That's it what is how we finish our proyect
+5.  Now that the checks were succeded  'Merge pull request' and the build in Travis
+    will happen BUT this time it will deploy to AWS as master is the branch we had to run in AWS.
 
-- NOTE: REMEMBER TO DELETE your beanstalk once you do this exercise to avoid paying real money for it, go to Actions -> delete application (all in 'All applications' dashboard)
+6. That's it what is how we finish our proyect
+
+**NOTE: REMEMBER TO DELETE your beanstalk once you do this exercise to avoid paying real money for it, go to Actions -> delete application (all in 'All applications' dashboard)**
 

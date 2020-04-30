@@ -8,3 +8,15 @@ before_install:
 
 script:
     - docker run -e CI=true qaguy/reactproject npm run test
+
+# deploy:
+#     provider: elasticbeanstalk
+#     region: "<yourregionasappearintheURL>"
+#     app: <yourappinaws>
+#     env: "<yourenvironmentname>"
+#     bucket_name: "<theS3bucketwheretheappwasstored>"
+#     bucket_path: "<samenameasappname"
+#     on:
+#         branch: master
+#     access_key_id: $AWS_ACCESS_KEY
+#     secret_access_key: $AWS_SECRET_KEY
