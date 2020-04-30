@@ -88,7 +88,7 @@ NOTE: if using the repository in github, just download and run 'npm install'
 
 3.  Now the thing is that base image needs node, but we also need a base image wit Nginx. **To overcome that we are going to use multi-steps build**
 
-![Image description](https://github.com/jorgeautomation/docker-react/blob/master/image-multiplestep.png)
+![Image description](https://github.com/jorgeautomation/docker-react/blob/master/image-miltiplestep.png)
 
 4. we create a dockerfile where the first stage is to run npm build to get our files and then a second base image to get the files from that build (app/build) and put them into '/usr/share/nginx/html' which is the default place for nginx for static content
     - **you don't have to put a command to start or run nginx, it will run once the container is created**
