@@ -101,30 +101,32 @@ NOTE: if using the repository in github, just download and run 'npm install'
 7 CONTINUOUS INTEGRATION WITH GITHUB
 ----------------------------------
 
-- Create a new repository in GitHub (something like docker-react, as public)
+1. Create a new repository in GitHub (something like docker-react, as public)
 
-- Go to the folder where the project is and:
+2. Go to the folder where the project is and:
     - git init
     - git add .
     - git commit -m "initial commit
     - git remote add origin https://github.com/jorgeautomation/docker-react.git
     - git push origin master
 
-CONTINUOUS DELIVERY WITH TRAVIS CI
+8 CONTINUOUS DELIVERY WITH TRAVIS CI
 ----------------------------------
 
-- Go to https://travis-ci.org/ and sign in with Github
+1. We are going to use Travis as continuos integration tool, it will take the Github repository and send the build to the AWS server.
 
-- Go to your profile, switch on your 'docker-react', then go to the dashboard
+2.  Go to https://travis-ci.org/ and sign in with Github
 
-- We have to create a .travis.yml file to tell Travis what we want to do with our repository
+3. Go to your profile, click on activate and choose your 'docker-react' repo, then go to the dashboard and select that repo
+
+4. We have to create a **.travis.yml** file to tell Travis what we want to do with our repository
     - Create the file in root folder
     - sudo: required to run it as administrator
-    - create a docker service to have a version of Docker ready to use
-    - put the Dockerfile.dev to be installed, we have to put it a tag because since this is running automatically we cannot take the image created for our containers.
-    - add the script to run, remember first our test. We have to add '-- --coverage' because if not travis will not never return the control to the command (because it will wait more instructions for testing)
+    - add a docker service to have a version of Docker ready to use
+    - put the Dockerfile.dev to be installed, we are going to use this as in that file is the configuration for our test of the app. We have to put it a tag because since this is running automatically we cannot take the image ID created for our containers.
+    - add the script to run, remember first our test, that is why we added npm run test to overwrite the command
 
-- We will commit the changes to Gitgub, as soon as we do that, since we now have a .travis.yml will build the image and test it and report to us.
+5. We will commit the changes to Gitgub, as soon as we do that, since we now have a .travis.yml will build the image and test it and report to us.
 
 AWS ELASTIC BEANSTALK
 ---------------------
