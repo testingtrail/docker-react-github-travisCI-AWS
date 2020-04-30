@@ -2,6 +2,10 @@ We are going to create an app that modifies a 'feature' branch, then it test it 
 
 ![Image description](https://github.com/jorgeautomation/docker-react/blob/master/image-structure.png)
 
+So we are going to run three different NPM commands, one for dev environment, one for the tests and another one for the build (app in production) which will use a light web server: NGINX
+
+![Image description](https://github.com/jorgeautomation/docker-react/blob/master/image-npm.png)
+
 PRE REQUISITES
 =============
 
@@ -53,7 +57,6 @@ NOTE: if using the repository in github, just download and run 'npm install'
 4 CREATE DOCKER COMPOSE
 -------------------------
 
-
 1. We have an issue now, the thing is that the command to run the container now is pretty big. So we can use a docker compose file to include the volumes and the ports to make the command shorter, so it will be
     - we have to use 'dockerfile' inside we as the file has a differente extension (that is: dev)
     - docker-compose up
@@ -74,26 +77,28 @@ NOTE: if using the repository in github, just download and run 'npm install'
     - Note: there is an issue on Windows that the test is not being refreshed in console
 
 
-CREATE DOCKER CONTAINER FOR APP IN PROD
+6 CREATE DOCKER CONTAINER FOR APP IN PROD ENV
 ---------------------------------------
 
-- Now we need to run our app in production, for that we are going to use NPM RUN BUILD
+1. Now we need to run our app in production, for that we are going to use NPM RUN BUILD
     - Basically it takes all the JS file, put them together and spits them out in a folder in the harddrive
-    - In order to communicate our files with users browser, we need a web server, something light and very useful, so we are going to use NGINX
+    - In order to communicate our files with users browser, we need a web server (as the localhost for dev server does not exist at this point), something light and very useful, so we are going to use NGINX
 
-- We are going to create a separate dockerfile to put in production our web app
+2. Create a separate dockerfile to put in production our web app: Dockerfile
 
-- Now the thing is that base image needs node, but we also need a base image wit Nginx
-    - To overcome that we are going to use multi-steps build
-    - we create a dockerfile where the first stage is to run npm build to get our files and then a second base image to get the files from that build (app/build) and put them into '/app/build /usr/share/nginx/html' which is the default place for nginx for static content
-    - you don't have to put a command to start or run nginx, it will run once the container is created
+3.  Now the thing is that base image needs node, but we also need a base image wit Nginx. **To overcome that we are going to use multi-steps build**
 
-- Run 'docker build .' to create that image for the build
+![Image description](https://github.com/jorgeautomation/docker-react/blob/master/image-multiplestep.png)
+
+4. we create a dockerfile where the first stage is to run npm build to get our files and then a second base image to get the files from that build (app/build) and put them into '/usr/share/nginx/html' which is the default place for nginx for static content
+    - **you don't have to put a command to start or run nginx, it will run once the container is created**
+
+5. Run 'docker build .' to create that image for the build
 
 - Finally run the container with 'docker run -p 8080:80 <image id>'
     - Navigate to localhost:8080 and boom!!! you are all set!!
 
-CONTINUOUS INTEGRATION WITH GITHUB
+7 CONTINUOUS INTEGRATION WITH GITHUB
 ----------------------------------
 
 - Create a new repository in GitHub (something like docker-react, as public)
